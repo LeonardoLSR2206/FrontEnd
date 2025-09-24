@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários</title>
+</head>
+<body>
+    <h2>Lista de usuários</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Ações</th>
+            </tr>
+        </thead>        
+        <tbody id="tabela">
+            <tr>
+                <!-- Gerado dinamicamente no javascript -->
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // Busca os dados dos usuários no server
+        function carregar(){
+            fetch('http://localhost:3000/usuarios')
+            .then(res => res.json())
+            .then(data => {
+                // Pegando os elementos da tabela
+                const tbody = document.getElementById('tabela')
+                // Limpar dados da tabela
+                tbody.innerHTML = ""
+
+
+
+                data.forEach(user => {
+                    const tr = document.createElement('tr')
+                    tr.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.nome}</td>
+                        <td>${user.email}</td>
+                        <td></td>
+                    `
+                    
+                })
+
+            })
+
+        }
+    </script>
+</body>
+</html>
