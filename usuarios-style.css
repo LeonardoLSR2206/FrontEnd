@@ -36,17 +36,17 @@ button{
     cursor: pointer;
 }
 
-.bnt-editar{
+.btn-editar{
     background: #f3a01c;
     width: auto;
     padding: 5px 10px;
 }
 
-.bnt-editar:hover{
+.btn-editar:hover{
     background: #ffa81d;
 }
 
-.bnt-excluir{
+.btn-excluir{
     background: #e7301b;
     width: auto;
     padding: 5px 10px;
@@ -54,4 +54,10 @@ button{
 
 .bnt-excluir:hover{
     background: #ff351e;
+}
+
+.btn-voltar{
+    background: #e58dc9;
+    width: auto;
+    padding: 5px 10px;
 }

@@ -9,6 +9,8 @@
 </head>
 <body>
     <h2>Lista de usuários</h2>
+
+    <button class="btn-voltar" onclick="voltar()">Voltar para cadastro</button>
     <table>
         <thead>
             <tr>
@@ -45,8 +47,8 @@
                         <td>${user.nome}</td>
                         <td>${user.email}</td>
                         <td>
-                            <button class="bnt-editar" onclick="editar(${user.id})">Editar</button>
-                            <button class="bnt-excluir" onclick="excluir(${user.id})">Excluir</button>
+                            <button class="btn-editar" onclick="editar(${user.id})">Editar</button>
+                            <button class="btn-excluir" onclick="excluir(${user.id})">Excluir</button>
                         </td>
                     `
 
@@ -54,6 +56,10 @@
                     
                 })
             })
+        }
+
+        function voltar(){
+            window.location.href = "index.html"
         }
 
         // Botão de excluir usuário
