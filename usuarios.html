@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="usuarios-style.css">
     <title>Usuários</title>
 </head>
 <body>
@@ -55,11 +56,48 @@
             })
         }
 
+        // Botão de excluir usuário
         function excluir(idUsuario){
             fetch(`http://localhost:3000/usuarios/${idUsuario}`, 
             {
                 'method' : 'DELETE'
             })
+            .then(() => carregarUsuarios())
+        }
+
+        // Botão de editar usuário
+        function editar(idUsuario){
+            let novoNome = prompt("Digite o novo nome: ")
+            let novoEmail = prompt("Digite o novo e-mail: ")
+            let novaSenha = prompt("Digite a nova senha: ")
+
+            if(novoNome.length < 1){
+                alert("Nome não pode estar vazio.")
+                return
+            }
+
+            if(novoEmail.length < 1){
+                alert("E-mail não pode estar vazio.")
+                return
+            }
+
+            if (novaSenha.length < 1){
+                alert("Senha não pode estar vazia.")
+                return
+            }
+
+            fetch(`http://localhost:3000/usuarios/${idUsuario}`,
+                {
+                    method : 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body : JSON.stringify({
+                        nome: novoNome,
+                        email: novoEmail,
+                        senha: novaSenha
+                    })
+                })
             .then(() => carregarUsuarios())
         }
 

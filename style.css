@@ -46,3 +46,12 @@ button{
     background-color: #65c593;
     border: solid 1px #cecece
 }
+
+.btn-lista{
+    background: #7fb3ee;
+}
+
+.btn-lista:hover{
+    background-color: #88bfff;
+    border: solid 1px #cecece;
+}
