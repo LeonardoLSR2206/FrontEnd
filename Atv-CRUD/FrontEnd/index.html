@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <h2>Cadastro do livro</h2>
+    
+    <form>
+        <label for="titulo">Título:<input type="text" id="titulo"></label>
+        <label for="autor">Autor:<input type="text" id="autor"></label>
+        <label for="ano">Ano de publicação:<input type="text" id="ano"></label>
+        <label for="genero">Gênero:<input type="text" id="genero"></label>
+        <label for="idioma">Idioma:<input type="text" id="idioma"></label>
+        <label for="preco">Preço:<input type="number" id="preco"></label>   
+        <div id="btn-container">
+            <button type="button" class="btn-cadastrar" onclick="enviar()">Cadastrar</button>
+            <button type="button" class="btn-lista" onclick="irParaLista()">Lista de livros</button>
+        </div>
+       
+    </form>
+
+
+    <script>
+        function enviar() {
+            let inputTitulo = document.getElementById('titulo').value;
+            let inputAutor = document.getElementById('autor').value;
+            let inputAno = document.getElementById('ano').value;
+            let inputGenero = document.getElementById('genero').value;
+            let inputIdioma = document.getElementById('idioma').value;
+            let inputPreco = document.getElementById('preco').value;
+
+            if(!inputTitulo || !inputAutor || !inputAno || !inputGenero || !inputIdioma || !inputPreco){
+                alert('Preencha os campos corretamente.')
+                return
+            }
+
+            fetch("http://localhost:3000/livros", {
+                method: "POST", 
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    titulo: inputTitulo,
+                    autor: inputAutor,
+                    ano: inputAno,
+                    genero: inputGenero,
+                    idioma: inputIdioma,
+                    preco: inputPreco
+
+                })
+            })
+            .then(response => response.json())
+            .then(function (data) {
+                console.log(data);
+                alert(`Livro com ID ${data.id} cadastrado.  `)
+
+                window.location.href = "livros.html"
+            })
+        }
+
+        function irParaLista(){
+            window.location.href = "livros.html"
+        }
+    </script>
+</body>
+</html>

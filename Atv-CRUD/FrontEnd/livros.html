@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livros</title>
+    <link rel="stylesheet" href="livros.css">
+</head>
+<body>
+    <h2>Lista de livros</h2>
+    
+    <button class="btn-voltar" onclick="voltar()">Voltar para cadastro</button>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Ano de pub.</th>
+                <th>Gênero</th>
+                <th>Idioma</th>
+                <th>Preço</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="tabela"></tbody>
+    </table>
+
+    <script>
+        function carregarLivros(){
+            fetch('http://localhost:3000/livros')
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('tabela')
+                tbody.innerHTML = ""
+
+
+
+                data.forEach(user => {
+                    const tr = document.createElement('tr')
+                    tr.innerHTML= `
+                        <td>${user.id}</td>
+                        <td>${user.titulo}</td>
+                        <td>${user.autor}</td>
+                        <td>${user.ano}</td>
+                        <td>${user.genero}</td>
+                        <td>${user.idioma}</td>
+                        <td>${user.preco}</td>
+                        <td>
+                            <button class="btn-editar" onclick="editar(${user.id})">Editar</button>
+                            <button class="btn-excluir" onclick="excluir(${user.id})">Excluir</button>
+                        </td>
+                    `
+
+                    tbody.appendChild(tr)
+
+                })
+            })
+        }
+
+        function voltar(){
+            window.location.href = "index.html"
+        }
+
+        function excluir(idLivro){
+            fetch(`http://localhost:3000/livros/${idLivro}`,
+            {
+                'method' : 'DELETE'
+            })
+            .then(() => carregarLivros())
+        }
+
+        function editar(idLivro){
+            let novoTitulo = prompt("Digite o novo título: ")
+            let novoAutor = prompt("Digite o novo autor: ")
+            let novoAno = prompt("Digite o novo ano: ")
+            let novoGenero = prompt("Digite o novo gênero: ")
+            let novoIdioma = prompt("Digite o novo idioma: ")
+            let novoPreco = prompt("Digite o novo preço: ")
+
+            if(novoTitulo.length < 1){
+                alert("Título não pode estar vazio.")
+                return
+            }
+
+            if(novoAutor.length < 1){
+                alert("Autor não pode estar vazio.")
+                return
+            }
+
+            if(novoAno.length < 1){
+                alert("Ano não pode estar vazio.")
+                return
+            }
+
+            if(novoGenero.length < 1){
+                alert("Gênero não pode estar vazio.")
+                return
+            }
+
+            if(novoIdioma.length < 1){
+                alert("Idioma não pode estar vazio.")
+                return
+            }
+
+            if(novoPreco.length < 1){
+                alert("Preço não pode estar vazio.")
+                return
+            }
+
+            fetch(`http://localhost:3000/livros/${idLivro}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body : JSON.stringify({
+                        titulo: novoTitulo,
+                        autor: novoAutor,
+                        ano: novoAno,
+                        genero: novoGenero,
+                        idioma: novoIdioma,
+                        preco: novoPreco
+                    })
+                })
+            .then(() => carregarLivros())
+        }   
+
+        window.onload = carregarLivros
+    </script>
+</body>
+</html>
